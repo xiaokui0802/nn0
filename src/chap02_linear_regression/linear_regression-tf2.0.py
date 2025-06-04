@@ -129,21 +129,11 @@ plt.grid(True, linestyle='--', alpha=0.7, color='gray')  # 虚线网格，半透
 plt.legend(['train', 'test', 'pred'])
 plt.show()
 
-
 # In[ ]:
-
-
-
 
 
 # In[ ]:
 
 
-
-
-
 # In[ ]:
-
-
-
 
