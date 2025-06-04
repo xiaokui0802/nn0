@@ -34,11 +34,11 @@ def generate_data(n_samples=1000):
     
     # 合并并打乱数据
     X = np.vstack(X_list)  #将多个子数据集合并为一个完整数据集
-    y_true = np.array(y_true)  #将Python列表转换为NumPy数组
+    y_true = np.array(y_true)  #将 Python 列表转换为 NumPy 数组
     shuffle_idx = np.random.permutation(n_samples) #生成0到n_samples-1的随机排列
     return X[shuffle_idx], y_true[shuffle_idx] #使用相同的随机索引同时打乱特征和标签
 
-# 自定义logsumexp函数
+# 自定义 logsumexp 函数
 def logsumexp(log_p, axis=1, keepdims=False):
     #max_val = np.max(log_p, axis=axis, keepdims=True)
     #return max_val + np.log(np.sum(np.exp(log_p - max_val), axis=axis, keepdims=keepdims))
@@ -61,7 +61,7 @@ def logsumexp(log_p, axis=1, keepdims=False):
     # 计算最终结果
     result = max_val + np.log(sum_exp)
     
-    # 处理全-inf输入的特殊case
+    # 处理全-inf输入的特殊 case
     if np.any(np.isneginf(log_p)) and not np.any(np.isfinite(log_p)):  #判断是否所有有效值都是-inf
         result = max_val.copy() if keepdims else max_val.squeeze(axis=axis) #根据keepdims参数的值返回 max_val 的适当形式。
     
@@ -98,7 +98,7 @@ class GaussianMixtureModel:
             for k in range(self.n_components): # 遍历每个高斯成分
                 log_prob[:, k] = np.log(self.pi[k]) + self._log_gaussian(X, self.mu[k], self.sigma[k]) # 计算第k个高斯分布的对数概率密度
             log_prob_sum = logsumexp(log_prob, axis=1, keepdims=True) # 使用logsumexp实现数值稳定的概率求和
-            gamma = np.exp(log_prob - log_prob_sum) # 计算后验概率矩阵gamma(也称为响应度矩阵)
+            gamma = np.exp(log_prob - log_prob_sum) # 计算后验概率矩阵 gamma (也称为响应度矩阵)
 
             # M步：更新参数
             Nk = np.sum(gamma, axis=0) # 计算每个高斯成分的"有效样本数"（即属于该成分的样本概率之和）
