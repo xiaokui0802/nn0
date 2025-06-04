@@ -3,18 +3,14 @@ import random
 import numpy as np
 
 from RL_QG_agent import RL_QG_agent  # 导入强化学习智能体
-
 # 创建初始环境并重置
 env = gym.make('Reversi8x8-v0')
 env.reset()
-
 # 初始化智能体并加载预训练模型
 agent = RL_QG_agent()
 agent.load_model()
-
 # 设置最大训练轮数
 max_epochs = 100
-
 # 主训练循环
 for i_episode in range(max_epochs):
     # 初始化棋局，返回初始 observation（3x8x8 的状态表示）
@@ -52,7 +48,6 @@ for i_episode in range(max_epochs):
         action[1] = 1  # 设置为白棋
         # 白棋落子并更新环境状态
         observation, reward, done, info = env.step(action)
-
         # 如果对局结束
         if done:
             print("Episode finished after {} timesteps".format(t+1))
