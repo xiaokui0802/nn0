@@ -13,7 +13,6 @@ from tensorflow.keras import layers
 from tensorflow.keras import layers, optimizers, datasets
 import os,sys,tqdm
 
-
 # ## 数据生成
 # 我们随机在 `start->end`之间采样除整数对`(num1, num2)`，计算结果`num1+num2`作为监督信号。
 # * 首先将数字转换成数字位列表 `convertNum2Digits`
@@ -182,45 +181,27 @@ def evaluate(model):
 
     print('accuracy is: %g' % np.mean([o[0]==o[1] for o in zip(datas[2], res)]))
 
-
 # In[5]:
 
 optimizer = optimizers.Adam(0.001)
 model = myRNNModel()
-
 
 # In[6]:
 
 train(3000, model, optimizer)
 evaluate(model)
 
-
 # In[7]:
 
 
-
+# In[ ]:
 
 
 # In[ ]:
 
 
-
-
-
 # In[ ]:
 
 
-
-
-
 # In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
