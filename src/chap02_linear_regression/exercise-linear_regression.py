@@ -3,7 +3,7 @@
 
 # ## 说明
 #
-# 请按照填空顺序编号分别完成 参数优化，不同基函数的实现
+# 请按照填空顺序编号分别完成参数优化，不同基函数的实现
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,7 +29,6 @@ def load_data(filename):
     xs, ys = zip(*xys)
     return np.asarray(xs), np.asarray(ys)
 
-
 # ## 恒等基函数（Identity Basis Function）的实现 填空顺序 2
 #
 def identity_basis(x):
@@ -37,7 +36,6 @@ def identity_basis(x):
     # 用于适配线性回归的矩阵运算格式
     ret = np.expand_dims(x, axis=1)
     return ret
-
 
 # 请分别在这里实现“多项式基函数”（Multinomial Basis Function）以及“高斯基函数”（Gaussian Basis Function）
 
@@ -58,7 +56,6 @@ def multinomial_basis(x, feature_num=10):
     # ==========
     return ret
 
-
 def gaussian_basis(x, feature_num=10):
     """
     高斯基函数：将输入映射为一组高斯函数响应
@@ -70,7 +67,6 @@ def gaussian_basis(x, feature_num=10):
     # 计算每个输入 x 对所有中心的响应，输出 shape (N, feature_num)
     return np.exp(-0.5 * ((x[:, np.newaxis] - centers) / sigma) ** 2)
 
-
 # ## 返回一个训练好的模型 填空顺序 1 用最小二乘法进行模型优化
 # ## 填空顺序 3 用梯度下降进行模型优化
 # > 先完成最小二乘法的优化 (参考书中第二章 2.3中的公式)
@@ -80,7 +76,6 @@ def gaussian_basis(x, feature_num=10):
 # 在main中利用训练集训练好模型的参数，并且返回一个训练好的模型。
 #
 # 计算出一个优化后的w，请分别使用最小二乘法以及梯度下降两种办法优化w
-
 
 def least_squares(phi, y, alpha=0.0, solver="pinv"):
     """
@@ -152,7 +147,6 @@ def least_squares(phi, y, alpha=0.0, solver="pinv"):
 
     return w
 
-
 def gradient_descent(phi, y, lr=0.01, epochs=1000):
     """梯度下降优化
     :param phi: 特征矩阵
@@ -172,7 +166,6 @@ def gradient_descent(phi, y, lr=0.01, epochs=1000):
         # 更新权重 w
         w -= lr * gradient
     return w
-
 
 def main(x_train, y_train, use_gradient_descent=False):
     """训练模型，并返回从x到y的映射。"""
@@ -212,7 +205,6 @@ def main(x_train, y_train, use_gradient_descent=False):
     # 确保返回值为可迭代对象
     return f, w_lsq, w_gd
 
-
 # ## 评估结果
 # > 没有需要填写的代码，但是建议读懂
 
@@ -222,7 +214,6 @@ def evaluate(ys, ys_pred):
     # 计算预测值与真实值的标准差
     std = np.sqrt(np.mean(np.abs(ys - ys_pred) ** 2))
     return std
-
 
 # 程序主入口（建议不要改动以下函数的接口）
 if __name__ == "__main__":
