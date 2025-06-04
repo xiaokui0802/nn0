@@ -10,7 +10,6 @@
 
 # In[1]:
 
-
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
@@ -25,7 +24,7 @@ dot_num = 100  # 设置数据点数量
 x_p = np.random.normal(
     3.0, 1, dot_num
 )  # 从均值为3，标准差为1的高斯分布中采样x坐标，用于正样本
-y_p = np.random.normal(6.0, 1, dot_num)  # x和y坐标
+y_p = np.random.normal(6.0, 1, dot_num)  # x 和 y 坐标
 y = np.ones(dot_num)  # 标签为1
 C1 = np.array([x_p, y_p, y]).T  # 组合成(x, y, label)格式
 
@@ -50,19 +49,16 @@ plt.scatter(C3[:, 0], C3[:, 1], c="r", marker="*")  # 绘制负样本，用红�
 data_set = np.concatenate((C1, C2, C3), axis=0)  # 将正样本和负样本连接成一个数据集
 np.random.shuffle(data_set)  # 随机打乱数据集的顺序
 
-
 # ## 建立模型
 # 建立模型类，定义loss函数，定义一步梯度下降过程函数
 #
 # 填空一：在`__init__`构造函数中建立模型所需的参数
 #
-# 填空二：实现softmax的交叉熵损失函数(不使用tf内置的loss 函数)
+# 填空二：实现 softmax 的交叉熵损失函数(不使用 tf 内置的 loss 函数)
 
 # In[1]:
 
-
 epsilon = 1e-12  # 防止 log(0)
-
 
 class SoftmaxRegression(tf.Module):
     def __init__(self, input_dim=2, num_classes=3):
@@ -91,7 +87,6 @@ class SoftmaxRegression(tf.Module):
         logits = tf.matmul(x, self.W) + self.b
         return tf.nn.softmax(logits)
 
-
 @tf.function
 def compute_loss(pred, labels, num_classes=3):
     """
@@ -116,7 +111,6 @@ def compute_loss(pred, labels, num_classes=3):
     )
     return loss, acc
 
-
 @tf.function
 def train_one_step(model, optimizer, x_batch, y_batch):
     """
@@ -135,11 +129,9 @@ def train_one_step(model, optimizer, x_batch, y_batch):
     optimizer.apply_gradients(zip(grads, model.trainable_variables))
     return loss, accuracy
 
-
 # ### 实例化一个模型，进行训练
 
 # In[12]:
-
 
 model = SoftmaxRegression()
 # 创建一个 SoftmaxRegression 模型实例 model
@@ -159,7 +151,6 @@ for i in range(1000):
 
 # In[13]:
 
-
 plt.scatter(C1[:, 0], C1[:, 1], c="b", marker="+")
 plt.scatter(C2[:, 0], C2[:, 1], c="g", marker="o")
 plt.scatter(C3[:, 0], C3[:, 1], c="r", marker="*")
@@ -175,6 +166,5 @@ Z = np.argmax(Z, axis=1)
 Z = Z.reshape(X.shape)
 plt.contour(X, Y, Z)
 plt.show()
-
 
 # In[ ]:
