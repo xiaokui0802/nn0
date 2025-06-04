@@ -6,7 +6,7 @@ class RL_QG_agent:
     def __init__(self):
         self.model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Reversi")
     #    pass    # 删掉这句话，并填写相应代码
-        #用于初始化与模型保存、TensorFlow会话以及输入和输出张量相关的属性
+        #用于初始化与模型保存、TensorFlow 会话以及输入和输出张量相关的属性
         os.makedirs(self.model_dir, exist_ok=True)
         self.sess = None
         self.saver = None
@@ -17,7 +17,7 @@ class RL_QG_agent:
 
         # 定义自己的 网络
         self.sess = tf.Session()
-        # 定义输入状态，假设为8x8棋盘，3个通道（如当前玩家棋子、对手棋子、可行位置）
+        # 定义输入状态，假设为 8x8 棋盘，3个通道（如当前玩家棋子、对手棋子、可行位置）
         self.input_states = tf.placeholder(tf.float32, shape=[None, 8, 8, 3], name="input_states")
         # 构建卷积神经网络
         conv1 = tf.layers.conv2d(inputs=self.input_states, filters=32, kernel_size=3, padding="same", activation=tf.nn.relu)
@@ -28,13 +28,13 @@ class RL_QG_agent:
         dense = tf.layers.dense(inputs=flat, units=512, activation=tf.nn.relu)
         # 输出层，64个动作的Q值
         self.Q_values = tf.layers.dense(inputs=dense, units=64, name="q_values")
-        # 初始化变量和Saver
+        # 初始化变量和 Saver
         self.sess.run(tf.global_variables_initializer())
         self.saver = tf.train.Saver()
         # 补全代码
         
     def place(self,state,enables):
-        # 这个函数 主要用于测试， 返回的 action是 0-63 之间的一个数值，
+        # 这个函数 主要用于测试， 返回的 action 是 0-63 之间的一个数值，
         # action 表示的是 要下的位置。
        # action = 123456789    # 删掉这句话，并填写相应代码
        # 状态预处理
@@ -45,7 +45,7 @@ class RL_QG_agent:
         
         # 过滤合法动作并选择最优
         legal_q = q_vals[0][enables]
-        if np.sum(legal_q) == 0:  # 所有合法动作Q值都为0的特殊情况处理
+        if np.sum(legal_q) == 0:  # 所有合法动作 Q 值都为 0 的特殊情况处理
             return np.random.choice(np.where(enables)[0])
         
         max_q = np.max(legal_q)
@@ -55,7 +55,7 @@ class RL_QG_agent:
         action = np.random.choice(candidates)
 
         return action
-   #save_model和load_model，用于保存和加载TensorFlow模型的参数
+   #save_model和load_model，用于保存和加载 TensorFlow 模型的参数
     def save_model(self):  # 保存 模型
         self.saver.save(self.sess, os.path.join(self.model_dir, 'parameter.ckpt'))
 
