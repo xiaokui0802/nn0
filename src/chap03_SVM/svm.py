@@ -84,7 +84,6 @@ class SVM():
             if np.linalg.norm(self.lr * dw) < self.tolerance:
                 break
     
-        # 请补全此处代码
     def predict(self, x):
         """
         预测标签
@@ -110,7 +109,7 @@ if __name__ == '__main__':
     svm = SVM()  # 初始化模型
     svm.train(data_train)  # 训练模型
 
-    # 使用SVM模型预测标签
+    # 使用 SVM 模型预测标签
     x_train = data_train[:, :2]  # feature [x1, x2]
     t_train = data_train[:, 2]  # 真实标签
     t_train_pred = svm.predict(x_train)  # 预测标签
