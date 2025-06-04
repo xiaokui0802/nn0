@@ -15,7 +15,6 @@ from tensorflow import keras
 from tensorflow.keras import layers, optimizers, datasets
 import os,sys,tqdm
 
-
 # ## 玩具序列数据生成
 # 生成只包含[A-Z]的字符串，并且将encoder输入以及decoder输入以及decoder输出准备好（转成index）
 
@@ -52,11 +51,9 @@ def get_batch(batch_size, length):
             tf.constant(dec_x, dtype=tf.int32), tf.constant(y, dtype=tf.int32))
 print(get_batch(2, 10))
 
-
 # # 建立sequence to sequence 模型
 
 # In[3]:
-
 
 class mySeq2SeqModel(keras.Model):
     def __init__(self):
@@ -112,8 +109,7 @@ class mySeq2SeqModel(keras.Model):
         # 计算logits 
         logits = self.dense(dec_out)  # (batch_size, dec_seq_len, vocab_size)
         return logits
-    
-    
+        
     @tf.function
     def encode(self, enc_ids):
         enc_emb = self.embed_layer(enc_ids) # shape(b_sz, len, emb_sz)
@@ -131,12 +127,11 @@ class mySeq2SeqModel(keras.Model):
         out = tf.argmax(logits, axis=-1)
         return out, state
 
-
 # # Loss函数以及训练逻辑
 
 # In[4]:
 
-#定义了一个使用TensorFlow的@tf.function装饰器的函数compute_loss，用于计算模型预测的损失值
+#定义了一个使用 TensorFlow 的 @tf.function 装饰器的函数 compute_loss ，用于计算模型预测的损失值
 @tf.function
 def compute_loss(logits, labels):
     """计算交叉熵损失"""
@@ -146,7 +141,7 @@ def compute_loss(logits, labels):
     return losses
 #定义了一个使用TensorFlow的@tf.function装饰器的函数train_one_step，用于执行一个训练步骤
 
-@tf.function  # 将函数编译为TensorFlow计算图，提升性能
+@tf.function  # 将函数编译为 TensorFlow 计算图，提升性能
 def train_one_step(model, optimizer, enc_x, dec_x, y):
     """执行一次训练步骤（前向传播+反向传播）"""
     with tf.GradientTape() as tape:  # 自动记录梯度
@@ -171,7 +166,6 @@ def train(model, optimizer, seqlen):
             print('step', step, ': loss', loss.numpy())
     return loss
 
-
 # # 训练迭代
 
 # In[5]:
@@ -179,16 +173,14 @@ optimizer = optimizers.Adam(0.0005)
 model = mySeq2SeqModel()
 train(model, optimizer, seqlen=20)
 
-
 # # 测试模型逆置能力
-# 首先要先对输入的一个字符串进行encode，然后在用decoder解码出逆置的字符串
+# 首先要先对输入的一个字符串进行 encode ，然后在用 decoder 解码出逆置的字符串
 # 测试阶段跟训练阶段的区别在于，在训练的时候decoder的输入是给定的，而在预测的时候我们需要一步步生成下一步的decoder的输入
 
 # In[6]:
 
-
 def sequence_reversal():
-    """测试阶段：对一个字符串执行encode，然后逐步decode得到逆序结果"""
+    """测试阶段：对一个字符串执行 encode ，然后逐步 decode 得到逆序结果"""
     def decode(init_state, steps=10):
         b_sz = tf.shape(init_state[0])[0]
         cur_token = tf.zeros(shape=[b_sz], dtype=tf.int32)  # 起始 token（全为 0）
@@ -216,9 +208,4 @@ def is_reverse(seq, rev_seq):
 print([is_reverse(*item) for item in list(zip(*sequence_reversal()))])
 print(list(zip(*sequence_reversal())))
 
-
 # In[ ]:
-
-
-
-
