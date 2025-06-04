@@ -309,7 +309,6 @@ for game in ['air_raid', 'alien', 'amidar', 'assault', 'asterix', 'asteroids', '
         name = ''.join([g.capitalize() for g in game.split('_')])
         if obs_type == 'ram':
             name = '{}-ram'.format(name)
-
         nondeterministic = False
         if game == 'elevator_action' and obs_type == 'ram':
             # ElevatorAction-ram-v0 seems to yield slightly
@@ -317,7 +316,6 @@ for game in ['air_raid', 'alien', 'amidar', 'assault', 'asterix', 'asteroids', '
             # should track this down eventually, but for now we just
             # mark it as nondeterministic.
             nondeterministic = True
-
         register(
             id='{}-v0'.format(name),
             entry_point='gym.envs.atari:AtariEnv',
@@ -325,7 +323,6 @@ for game in ['air_raid', 'alien', 'amidar', 'assault', 'asterix', 'asteroids', '
             max_episode_steps=10000,
             nondeterministic=nondeterministic,
         )
-
         register(
             id='{}-v4'.format(name),
             entry_point='gym.envs.atari:AtariEnv',
@@ -333,13 +330,11 @@ for game in ['air_raid', 'alien', 'amidar', 'assault', 'asterix', 'asteroids', '
             max_episode_steps=100000,
             nondeterministic=nondeterministic,
         )
-
         # Standard Deterministic (as in the original DeepMind paper)
         if game == 'space_invaders':
             frameskip = 3
         else:
             frameskip = 4
-
         # Use a deterministic frame skip.
         register(
             id='{}Deterministic-v0'.format(name),
@@ -374,7 +369,6 @@ for game in ['air_raid', 'alien', 'amidar', 'assault', 'asterix', 'asteroids', '
             max_episode_steps=frameskip * 100000,
             nondeterministic=nondeterministic,
         )
-
 # Board games
 # ----------------------------------------
 
@@ -419,7 +413,6 @@ register(
         'board_size': 9,
     },
 )
-
 # Debugging
 # ----------------------------------------
 
@@ -458,7 +451,6 @@ register(
     id='CNNClassifierTraining-v0',
     entry_point='gym.envs.parameter_tuning:CNNClassifierTraining',
 )
-
 # Safety
 # ----------------------------------------
 
