@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # 参考mnist_conv-keras实现针对cifar10的alexNet卷积模型
+# # 参考 mnist_conv-keras 实现针对 cifar10 的 alexNet 卷积模型
 # 
 # 
 # #### 链接: https://pan.baidu.com/s/1LcCPcK9DgLS3W_DUPZS8kQ 提取码: 5vwz
@@ -42,9 +42,7 @@ def prepare_mnist_features_and_labels(x, y):
 
 # In[ ]:
 
-
-
-
+# 准备开始
 
 # ## 建立模型
 
@@ -97,7 +95,7 @@ model = myConvModel()
 optimizer = optimizers.Adam(0.001)
 
 
-# ## 编译， fit以及evaluate
+# ## 编译， fit以及 evaluate
 
 # In[19]:
 
@@ -169,9 +167,7 @@ pylab.subplot(2, 2, 4); pylab.axis('off'); pylab.imshow(img_out[0, :, :, 19])
 pylab.show()
 
 
-
 # In[23]:
-
 
 import numpy
 import pylab
@@ -227,7 +223,6 @@ pylab.subplot(2, 2, 2); pylab.axis('off'); pylab.imshow(img_out[0, :, :, 17])
 pylab.subplot(2, 2, 3); pylab.axis('off'); pylab.imshow(img_out[0, :, :, 18])
 pylab.subplot(2, 2, 4); pylab.axis('off'); pylab.imshow(img_out[0, :, :, 19])
 pylab.show()
-
 
 
 # In[ ]:
