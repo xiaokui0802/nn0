@@ -42,7 +42,7 @@ def prepare_mnist_features_and_labels(x, y):
 
 
 
-# ## 建立模型
+# ## 开始建立模型
 
 # In[24]:
 
@@ -71,8 +71,9 @@ model = myConvModel()
 
 optimizer = optimizers.Adam()
 
+# 模型建立完成
 
-# ## 定义loss以及train loop
+# ## 定义 loss 以及 train loop 
 
 # In[25]:
 
@@ -134,7 +135,7 @@ def test(model, ds):
     return loss, accuracy
 
 
-# # 训练
+# # 训 练
 
 # In[26]:
 
