@@ -23,12 +23,14 @@ class RBM:
 
         # 初始化权重和偏置
         # 使用 Xavier 初始化方法：标准差 = sqrt(2 / (输入维度 + 输出维度))
+        
         init_std = np.sqrt(2.0 / (self.n_observe + self.n_hidden))  # Xavier初始化标准差
 
         self.W = np.random.normal(
             0, init_std, size=(self.n_observe, self.n_hidden)
-        )  # 初始化权重矩阵（可见层 -> 隐藏层）
-
+        )  
+        
+        # 初始化权重矩阵（可见层 -> 隐藏层）
         # 可选替代方案：使用更小的固定标准差进行初始化。
         # self.W = np.random.normal(0, 0.01, size=(n_observe, n_hidden))
 
@@ -50,41 +52,45 @@ class RBM:
     
         # 请补全此处代码
          # 将数据展平为二维数组 [n_samples, n_observe]
+        
         data_flat = data.reshape(data.shape[0], -1)  
-        n_samples = data_flat.shape[0]  # 样本数量
+        n_samples = data_flat.shape[0]  
+        # 样本数量
 
         # 定义训练参数
+        
         learning_rate = 0.1 # 学习率，控制参数更新的步长
         epochs = 10 # 训练轮数，整个数据集将被遍历10次v
         batch_size = 100 # 批处理大小，每次更新参数使用的样本数量
 
        # 开始训练轮数
         for epoch in range(epochs):
+            
             # 打乱数据顺序
-            np.random.shuffle(data_flat) # 使用小批量梯度下降法
-            for i in range(0, n_samples, batch_size):# 获取当前批次的数据
-                batch = data_flat[i:i + batch_size] # 将批次数据转换为 float64 类型，确保数值计算的精度
-                v0 = batch.astype(np.float64)  # 确保数据类型正确
+            np.random.shuffle(data_flat)                # 使用小批量梯度下降法
+            for i in range(0, n_samples, batch_size):   # 获取当前批次的数据
+                batch = data_flat[i:i + batch_size]     # 将批次数据转换为 float64 类型，确保数值计算的精度
+                v0 = batch.astype(np.float64)           # 确保数据类型正确
 
                 # 正相传播：从v0计算隐藏层激活概率
 
                 h0_prob = self._sigmoid(np.dot(v0, self.W) + self.b_h) # 计算隐藏层单元被激活的概率
-                h0_sample = self._sample_binary(h0_prob) # 根据计算出的概率对隐藏层进行二值化采样
+                h0_sample = self._sample_binary(h0_prob)               # 根据计算出的概率对隐藏层进行二值化采样
 
                 # 负相传播：从隐藏层重构可见层，再计算隐藏层概率
                 v1_prob = self._sigmoid(np.dot(h0_sample, self.W.T) + self.b_v)  #将上述结果传入 Sigmoid 激活函数进行非线性变换，得到最终的概率值 v1_prob
-                v1_sample = self._sample_binary(v1_prob)        # 对可见层进行二值采样
+                v1_sample = self._sample_binary(v1_prob)                         # 对可见层进行二值采样
                 h1_prob = self._sigmoid(np.dot(v1_sample, self.W) + self.b_h)
 
                 # 计算梯度      
-                dW = np.dot(v0.T, h0_sample) - np.dot(v1_sample.T, h1_prob)         # 计算权重矩阵的梯度
+                dW = np.dot(v0.T, h0_sample) - np.dot(v1_sample.T, h1_prob)          # 计算权重矩阵的梯度
                 db_v = np.sum(v0 - v1_sample, axis=0)                                # 计算可见层偏置的梯度
                 db_h = np.sum(h0_sample - h1_prob, axis=0)                           # 计算隐藏层偏置的梯度
 
                 # 更新参数
                 self.W += learning_rate * dW / batch_size                            # 更新权重矩阵
                 self.b_v += learning_rate * db_v / batch_size                        # 更新可见层偏置
-                self.b_h += learning_rate * db_h / batch_size                         # 更新隐藏层偏置
+                self.b_h += learning_rate * db_h / batch_size                        # 更新隐藏层偏置
 
     def sample(self):
         """从训练好的模型中采样生成新数据（Gibbs采样）"""
