@@ -10,13 +10,23 @@
 
 # In[1]:
 
+# 导入必要的库
 
 import tensorflow as tf
+
+#数据可视化
 import matplotlib.pyplot as plt
 
+# 动画功能
 from matplotlib import animation, rc
+
+# 显示支持
 from IPython.display import HTML
+
+# 颜色映射
 import matplotlib.cm as cm
+
+# 计算数据库
 import numpy as np
 
 # get_ipython().run_line_magic('matplotlib', 'inline')
