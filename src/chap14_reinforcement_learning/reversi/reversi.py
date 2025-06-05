@@ -61,6 +61,7 @@ class ReversiEnv(gym.Env):
             raise error.Error('Unsupported observation type: {}'.format(self.observation_type))
 
         # One action for each board position and resign and pass
+        
         self.action_space = spaces.Discrete(self.board_size ** 2 + 2)
         observation = self.reset()
         self.observation_space = spaces.Box(np.zeros(observation.shape), np.ones(observation.shape))
@@ -71,6 +72,7 @@ class ReversiEnv(gym.Env):
         self.np_random, seed = seeding.np_random(seed)
 
         # Update the random policy if needed
+        
         if isinstance(self.opponent, str):
             if self.opponent == 'random':
                 self.opponent_policy = make_random_policy(self.np_random)
@@ -83,7 +85,9 @@ class ReversiEnv(gym.Env):
         return [seed]
 
     def _reset(self):
+        
         # init board setting
+        
         self.state = np.zeros((3, self.board_size, self.board_size))
         self.state[2, :, :] = 1.0
         self.state[2, 3:5, 3:5] = 0
@@ -96,6 +100,7 @@ class ReversiEnv(gym.Env):
         self.done = False
 
         # Let the opponent play if it's not the agent's turn
+        
         if self.player_color != self.to_play:
             a = self.opponent_policy(self.state)
             ReversiEnv.make_place(self.state, a, ReversiEnv.BLACK)
@@ -107,7 +112,9 @@ class ReversiEnv(gym.Env):
         action = action[0]
         
         assert self.to_play == self.player_color
+        
         # If already terminal, then don't do anything
+        
         if self.done:   # 如果已经结束了
             return self.state, 0., True, {'state': self.state}
         if color == 0:  #  黑色棋子是 0
@@ -129,6 +136,7 @@ class ReversiEnv(gym.Env):
                 self.possible_actions = ReversiEnv.get_possible_actions(self.state, 1)
 
         else:       # # Opponent play  白色棋子 是 1
+            
             if ReversiEnv.pass_place(self.board_size, action):
                 pass
             elif ReversiEnv.resign_place(self.board_size, action):
@@ -268,9 +276,13 @@ class ReversiEnv(gym.Env):
     @staticmethod
     def valid_place(board, action, player_color):
         coords = ReversiEnv.action_to_coordinate(board, action)
+        
         # check whether there is any empty places
+        
         if board[2, coords[0], coords[1]] == 1:
+            
             # check whether there is any reversible places
+            
             if ReversiEnv.valid_reverse_opponent(board, coords, player_color):
                 return True
             else:
