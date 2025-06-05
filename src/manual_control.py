@@ -18,14 +18,29 @@ Welcome to CARLA manual control.
 
 Use ARROWS or WASD keys for control.
 
+# 油门/刹车控制
     W            : throttle
     S            : brake
+
+    # 左右转向控制
     A/D          : steer left/right
+
+    # 切换倒车模式
     Q            : toggle reverse
+
+    # 手刹
     Space        : hand-brake
+
+    # 切换自动驾驶模式
     P            : toggle autopilot
+
+    # 切换手动变速模式
     M            : toggle manual transmission
+
+    # 升档/降档
     ,/.          : gear up/down
+
+    # 开启/关闭60km/h定速巡航
     CTRL + W     : toggle constant velocity mode at 60 km/h
 
     L            : toggle next light type
